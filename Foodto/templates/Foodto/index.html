@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foodto | Escáner Visual</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --rojo-principal: #D32F2F;
+            --fondo-crema: #F7F5F0;
+            --texto-oscuro: #1A1A1A;
+            --borde-fino: 2px solid var(--texto-oscuro);
+            --sombra-solida: 4px 4px 0px var(--texto-oscuro);
+        }
+
+        body { 
+            background-color: var(--fondo-crema);
+            font-family: 'Outfit', sans-serif;
+            color: var(--texto-oscuro);
+        }
+
+        h1, h2, h3, h4, h5, .titulo-oswald {
+            font-family: 'Oswald', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--texto-oscuro);
+        }
+
+        .text-rojo { color: var(--rojo-principal) !important; }
+
+        .card { 
+            background-color: #ffffff;
+            border: var(--borde-fino);
+            border-radius: 8px;
+            box-shadow: var(--sombra-solida);
+        }
+
+        .btn-primary {
+            background-color: var(--rojo-principal);
+            border: var(--borde-fino);
+            color: white;
+            border-radius: 4px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+            transition: transform 0.1s;
+        }
+        .btn-primary:hover, .btn-primary:active {
+            background-color: #B71C1C;
+            border: var(--borde-fino);
+            color: white;
+            transform: translateY(2px);
+        }
+
+        .form-control {
+            border: var(--borde-fino);
+            border-radius: 4px;
+        }
+        .form-control:focus {
+            box-shadow: none;
+            border-color: var(--rojo-principal);
+        }
+
+        .badge-alergeno {
+            font-size: 1rem;
+            font-weight: 600;
+            padding: 8px 16px;
+            border: var(--borde-fino);
+            border-radius: 4px;
+            margin: 4px;
+            color: var(--texto-oscuro);
+            background-color: #fff;
+        }
+        .riesgo-box {
+            border: var(--borde-fino);
+            border-radius: 4px;
+            padding: 12px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.2rem;
+            text-align: center;
+        }
+        
+        .foto-preview { 
+            border: var(--borde-fino);
+            max-height: 280px; 
+            object-fit: cover; 
+            width: 100%; 
+            border-radius: 4px;
+        }
+
+        hr { border-color: var(--texto-oscuro); opacity: 0.2; }
+    </style>
+</head>
+<body>
+    <div class="container py-5">
+        <header class="text-center mb-5">
+            <h1 class="display-3 fw-bold text-rojo">FOODTO.</h1>
+            <p class="lead fw-light">SISTEMA DE ANÁLISIS VISUAL DE ALÉRGENOS</p>
+        </header>
+        
+        <div class="row justify-content-center g-4">
+            <div class="col-md-5">
+                <div class="card p-4">
+                    <h4 class="mb-3">MÓDULO DE ENTRADA</h4>
+                    <p class="text-muted small mb-4">Seleccione una imagen para iniciar el análisis neuronal.</p>
+                    
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="mb-4">
+                            <input class="form-control" type="file" name="foto" accept="image/*" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100 py-2">
+                            EJECUTAR ANÁLISIS
+                        </button>
+                    </form>
+                    
+                    {% if url_imagen %}
+                    <div class="mt-4">
+                        <p class="text-muted small fw-bold mb-2">IMAGEN CAPTURADA:</p>
+                        <img src="{{ url_imagen }}" alt="Plato subido" class="foto-preview">
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="col-md-7">
+                {% if error %}
+                    <div class="card p-3 mb-3 bg-danger text-white" style="border-color: #8B0000;">
+                        <strong>ERROR DEL SISTEMA:</strong> {{ error }}
+                    </div>
+                {% endif %}
+
+                {% if plato %}
+                    <div class="card p-4 h-100">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div>
+                                <p class="text-muted small fw-bold mb-0">OBJETO IDENTIFICADO</p>
+                                <h2 class="text-rojo mb-0">{{ plato }}</h2>
+                            </div>
+                            <div class="text-end">
+                                <p class="text-muted small fw-bold mb-0">FIABILIDAD</p>
+                                <h3 class="mb-0">{{ confianza }}%</h3>
+                            </div>
+                        </div>
+                        
+                        <hr>
+                        
+                        <div class="row mt-4">
+                            <div class="col-12 mb-4">
+                                <p class="text-muted small fw-bold mb-2">NIVEL DE RIESGO</p>
+                                {% if riesgo == 'ALTO' or riesgo == 'MUY ALTO' %}
+                                    <div class="riesgo-box" style="background-color: #ffcccc;">RIESGO {{ riesgo }}</div>
+                                {% elif riesgo == 'MEDIO' %}
+                                    <div class="riesgo-box" style="background-color: #fff3cd;">RIESGO {{ riesgo }}</div>
+                                {% else %}
+                                    <div class="riesgo-box" style="background-color: #d1e7dd;">RIESGO {{ riesgo }}</div>
+                                {% endif %}
+                            </div>
+
+                            <div class="col-12 mb-4">
+                                <p class="text-muted small fw-bold mb-2">MARCADORES DETECTADOS (ALÉRGENOS)</p>
+                                <div class="d-flex flex-wrap">
+                                    {% for alergeno in alergenos %}
+                                        <span class="badge-alergeno">{{ alergeno }}</span>
+                                    {% empty %}
+                                        <span class="badge-alergeno" style="background-color: #d1e7dd;">Ninguno detectado</span>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-auto p-3" style="background-color: var(--fondo-crema); border-radius: 4px; border: 1px solid #ddd;">
+                            <p class="text-muted small fw-bold mb-1">OBSERVACIONES CLÍNICAS</p>
+                            <p class="mb-0" style="font-size: 0.95rem;">{{ info }}</p>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="card p-5 h-100 d-flex align-items-center justify-content-center text-center">
+                        <div class="opacity-50">
+                            <h2 class="titulo-oswald mb-3">SISTEMA EN ESPERA</h2>
+                            <p>Esperando carga de imagen para cruce de datos.</p>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
