@@ -1,10 +1,10 @@
-# 🍔 Foodto - Sistema de Análisis Visual de Alérgenos
+#  Foodto - Sistema de Análisis Visual de Alérgenos
 
 Este proyecto es una aplicación web Full-Stack desarrollada con **Django** e **Inteligencia Artificial (PyTorch)**. Permite a los usuarios subir imágenes de platos de comida para, mediante una red neuronal convolucional (ResNet18 con Fine-Tuning), identificar el plato, cruzar los datos y devolver una evaluación del nivel de riesgo y los alérgenos presentes.
 
 ---
 
-## ⚙️ Requisitos Previos
+##  Requisitos Previos
 
 Para ejecutar este proyecto en un nuevo equipo, asegúrate de tener instalado:
 * **Python 3.8 o superior** (Durante la instalación en Windows, es vital marcar la casilla "Add Python to PATH").
@@ -12,7 +12,7 @@ Para ejecutar este proyecto en un nuevo equipo, asegúrate de tener instalado:
 
 ---
 
-## 🚀 Guía de Instalación y Despliegue Local (Windows)
+##  Guía de Instalación y Despliegue Local (Windows)
 
 Sigue estos pasos en la terminal (Símbolo del sistema o PowerShell) para poner en marcha el proyecto desde cero:
 
@@ -53,11 +53,11 @@ Una vez está todo instalado y configurado, enciende el motor web y carga la IA 
     python manage.py runserver
 
 Si todo ha ido bien, la terminal indicará que el servidor está corriendo sin errores. 
-Abre tu navegador web y entra en: 👉 http://127.0.0.1:8000/
+Abre tu navegador web y entra en:  http://127.0.0.1:8000/
 
 ---
 
-## 📂 Estructura Principal del Proyecto
+##  Estructura Principal del Proyecto
 
 * `core_tfg/`: Configuración principal de Django.
 * `Foodto/`: Aplicación principal.
