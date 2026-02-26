@@ -19,7 +19,6 @@ db.sqlite3
 .pytest_cache/
 .coverage
 htmlcov/
-mi_modelo_comida.pth
 prueba*.png
 prueba*.jpg
 prueba*.jpeg
