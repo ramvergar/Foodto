@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Foodto - Inicio</title>
+    <style>
+        body { background-color: #f9f8f4; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center; color: #333; margin-top: 80px; }
+        h1.logo { color: #d32f2f; font-size: 4rem; font-weight: 900; margin-bottom: 0; letter-spacing: 2px; }
+        p.subtitle { color: #555; font-size: 1.1rem; letter-spacing: 1px; margin-top: 5px; margin-bottom: 50px; text-transform: uppercase; }
+        .card { background: white; border: 3px solid black; border-radius: 6px; padding: 40px; max-width: 400px; margin: 0 auto; box-shadow: 4px 4px 0px rgba(0,0,0,0.1); }
+        .btn { display: block; width: 100%; padding: 15px; margin: 15px 0; text-decoration: none; font-weight: bold; font-size: 1.1rem; border: 2px solid black; border-radius: 4px; cursor: pointer; text-transform: uppercase; box-sizing: border-box; transition: 0.2s; }
+        .btn-login { background-color: #ffffff; color: black; }
+        .btn-login:hover { background-color: #f0f0f0; }
+        .btn-register { background-color: #d32f2f; color: white; }
+        .btn-register:hover { background-color: #b71c1c; }
+    </style>
+</head>
+<body>
+    <h1 class="logo">FOODTO.</h1>
+    <p class="subtitle">SISTEMA DE ANÁLISIS VISUAL DE ALÉRGENOS</p>
+    
+    <div class="card">
+        <h2>MÓDULO DE ACCESO</h2>
+        <p style="margin-bottom: 30px; font-size: 0.9rem; color: #666;">Identifícate para iniciar el análisis neuronal.</p>
+        <a href="{% url 'login' %}" class="btn btn-login">Iniciar Sesión</a>
+        <a href="{% url 'registro' %}" class="btn btn-register">Crear Cuenta</a>
+    </div>
+</body>
+</html>

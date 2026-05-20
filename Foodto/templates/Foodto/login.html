@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Foodto - Iniciar Sesión</title>
+    <style>
+        body { background-color: #f9f8f4; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center; color: #333; margin-top: 80px; }
+        h1.logo { color: #d32f2f; font-size: 3rem; font-weight: 900; margin-bottom: 0; letter-spacing: 2px; }
+        .card { background: white; border: 3px solid black; border-radius: 6px; padding: 40px; max-width: 400px; margin: 30px auto; box-shadow: 4px 4px 0px rgba(0,0,0,0.1); text-align: left; }
+        input { width: 100%; padding: 10px; margin-bottom: 15px; border: 2px solid black; border-radius: 4px; box-sizing: border-box; font-size: 1rem; }
+        .btn-submit { width: 100%; padding: 15px; background-color: #d32f2f; color: white; font-weight: bold; font-size: 1.1rem; border: 2px solid black; border-radius: 4px; cursor: pointer; text-transform: uppercase; margin-top: 10px; }
+        .btn-submit:hover { background-color: #b71c1c; }
+        .volver { display: block; text-align: center; margin-top: 20px; color: #555; text-decoration: none; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1 class="logo">FOODTO.</h1>
+    <div class="card">
+        <h2 style="margin-top: 0; border-bottom: 2px solid #eee; padding-bottom: 10px;">INICIAR SESIÓN</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn-submit">Entrar al Escáner</button>
+        </form>
+        <a href="{% url 'inicio' %}" class="volver">← Volver al inicio</a>
+    </div>
+</body>
+</html>

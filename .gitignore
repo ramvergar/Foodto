@@ -22,3 +22,5 @@ htmlcov/
 prueba*.png
 prueba*.jpg
 prueba*.jpeg
+dataset_comida_grande/
+dataset_comida/

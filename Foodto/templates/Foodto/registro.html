@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Foodto - Mi Perfil</title>
+    <style>
+        body { background-color: #f9f8f4; font-family: 'Segoe UI', sans-serif; text-align: center; margin-top: 50px; }
+        .card { background: white; border: 3px solid black; border-radius: 6px; padding: 40px; max-width: 500px; margin: 0 auto; box-shadow: 4px 4px 0px black; text-align: left; }
+        .text-rojo { color: #d32f2f; font-weight: bold; }
+        .btn-volver { display: inline-block; margin-top: 20px; padding: 10px 20px; background-color: black; color: white; text-decoration: none; border-radius: 4px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1 style="color: #d32f2f; font-size: 3rem;">MI PERFIL</h1>
+    <div class="card">
+        <p><strong>Nombre de usuario:</strong> {{ user.username }}</p>
+        <p><strong>Email:</strong> {{ user.email|default:"No proporcionado" }}</p>
+        <p><strong>Fecha de registro:</strong> {{ user.date_joined|date:"d/m/Y" }}</p>
+        
+        <hr style="border: 1px solid #eee; margin: 20px 0;">
+        
+        <h3>Estadísticas de Análisis</h3>
+        <p>Has analizado <span class="text-rojo">X</span> platos hasta la fecha.</p>
+        
+        <a href="{% url 'escaner' %}" class="btn-volver">← VOLVER AL ESCÁNER</a>
+    </div>
+</body>
+</html>

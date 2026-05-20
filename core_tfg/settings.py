@@ -114,3 +114,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+# Hacia dónde va el usuario al iniciar sesión con éxito
+LOGIN_REDIRECT_URL = 'escaner'
+
+# Hacia dónde va el usuario al cerrar sesión
+LOGOUT_REDIRECT_URL = 'inicio'

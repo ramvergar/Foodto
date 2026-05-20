@@ -95,6 +95,17 @@
     </style>
 </head>
 <body>
+    <nav style="background-color: #f8f9fa; border-bottom: 3px solid black; padding: 10px 20px; display: flex; justify-content: flex-end; align-items: center; gap: 20px;">
+    {% if user.is_authenticated %}
+        <span style="font-family: 'Outfit', sans-serif;">Usuario: <strong class="text-rojo">{{ user.username }}</strong></span>
+        <a href="{% url 'perfil' %}" style="text-decoration: none; font-size: 24px;" title="Mi Perfil">👤</a>
+        
+        <form action="{% url 'logout' %}" method="post" style="margin: 0;">
+            {% csrf_token %}
+            <button type="submit" style="background: none; border: none; color: #D32F2F; font-family: 'Oswald', sans-serif; cursor: pointer; font-weight: bold; text-transform: uppercase;">Cerrar sesión</button>
+        </form>
+    {% endif %}
+</nav>
     <div class="container py-5">
         <header class="text-center mb-5">
             <h1 class="display-3 fw-bold text-rojo">FOODTO.</h1>
