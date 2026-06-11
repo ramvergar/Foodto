@@ -2,27 +2,146 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Foodto - Mi Perfil</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foodto - Iniciar Sesión</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+    
     <style>
-        body { background-color: #f9f8f4; font-family: 'Segoe UI', sans-serif; text-align: center; margin-top: 50px; }
-        .card { background: white; border: 3px solid black; border-radius: 6px; padding: 40px; max-width: 500px; margin: 0 auto; box-shadow: 4px 4px 0px black; text-align: left; }
-        .text-rojo { color: #d32f2f; font-weight: bold; }
-        .btn-volver { display: inline-block; margin-top: 20px; padding: 10px 20px; background-color: black; color: white; text-decoration: none; border-radius: 4px; font-weight: bold; }
+        :root {
+            --rojo-principal: #D32F2F;
+            --fondo-crema: #F7F5F0;
+            --texto-oscuro: #1A1A1A;
+            --borde-fino: 2px solid var(--texto-oscuro);
+            --sombra-solida: 4px 4px 0px var(--texto-oscuro);
+        }
+
+        body { 
+            background-color: var(--fondo-crema); 
+            font-family: 'Outfit', sans-serif; 
+            text-align: center; 
+            color: var(--texto-oscuro); 
+            margin: 0;
+            padding: 20px 10px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-sizing: border-box;
+        }
+
+        h1.logo { 
+            font-family: 'Oswald', sans-serif;
+            color: var(--rojo-principal); 
+            font-size: 3.5rem; 
+            font-weight: 900; 
+            margin-bottom: 5px; 
+            letter-spacing: 2px; 
+        }
+
+        .subtitulo {
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            color: #666;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+        }
+
+        .card { 
+            background: white; 
+            border: var(--borde-fino); 
+            border-radius: 6px; 
+            padding: 30px 20px; 
+            width: 100%;
+            max-width: 400px; 
+            box-sizing: border-box;
+            box-shadow: var(--sombra-solida); 
+            text-align: left; 
+        }
+
+        h2 {
+            font-family: 'Oswald', sans-serif;
+            margin-top: 0; 
+            border-bottom: var(--borde-fino); 
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.6rem;
+            letter-spacing: 0.5px;
+        }
+
+        /* Hack para estirar y poner bonitos los inputs que genera Django automáticamente */
+        .card p {
+            margin-bottom: 15px;
+        }
+        .card label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 5px;
+            font-size: 0.95rem;
+        }
+        .card input { 
+            width: 100%; 
+            padding: 12px; 
+            border: var(--borde-fino); 
+            border-radius: 4px; 
+            box-sizing: border-box; 
+            font-size: 1rem; 
+            font-family: 'Outfit', sans-serif;
+        }
+        .card input:focus {
+            outline: none;
+            border-color: var(--rojo-principal);
+        }
+
+        .btn-submit { 
+            width: 100%; 
+            padding: 15px; 
+            background-color: var(--rojo-principal); 
+            color: white; 
+            font-family: 'Oswald', sans-serif;
+            font-weight: bold; 
+            font-size: 1.2rem; 
+            border: var(--borde-fino); 
+            border-radius: 4px; 
+            cursor: pointer; 
+            text-transform: uppercase; 
+            margin-top: 15px; 
+            letter-spacing: 1px;
+            transition: transform 0.1s;
+        }
+        .btn-submit:hover, .btn-submit:active { 
+            background-color: #b71c1c; 
+            transform: translateY(2px);
+        }
+
+        .volver { 
+            display: block; 
+            text-align: center; 
+            margin-top: 20px; 
+            color: var(--texto-oscuro); 
+            text-decoration: none; 
+            font-weight: bold; 
+            font-size: 0.95rem;
+        }
+        .volver:hover {
+            color: var(--rojo-principal);
+        }
     </style>
 </head>
 <body>
-    <h1 style="color: #d32f2f; font-size: 3rem;">MI PERFIL</h1>
+
+    <h1 class="logo">FOODTO.</h1>
+    <p class="subtitulo">Sistema de Análisis Visual de Alérgenos</p>
+
     <div class="card">
-        <p><strong>Nombre de usuario:</strong> {{ user.username }}</p>
-        <p><strong>Email:</strong> {{ user.email|default:"No proporcionado" }}</p>
-        <p><strong>Fecha de registro:</strong> {{ user.date_joined|date:"d/m/Y" }}</p>
-        
-        <hr style="border: 1px solid #eee; margin: 20px 0;">
-        
-        <h3>Estadísticas de Análisis</h3>
-        <p>Has analizado <span class="text-rojo">X</span> platos hasta la fecha.</p>
-        
-        <a href="{% url 'escaner' %}" class="btn-volver">← VOLVER AL ESCÁNER</a>
+        <h2>INICIAR SESIÓN</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn-submit">Entrar al Escáner</button>
+        </form>
+        <a href="{% url 'inicio' %}" class="volver">← Volver al inicio</a>
     </div>
+
 </body>
 </html>

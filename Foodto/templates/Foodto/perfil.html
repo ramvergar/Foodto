@@ -2,30 +2,151 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Foodto - Mi Perfil</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+    
     <style>
-        body { background-color: #f9f8f4; font-family: 'Segoe UI', sans-serif; text-align: center; margin-top: 50px; }
-        .card { background: white; border: 3px solid black; border-radius: 6px; padding: 40px; max-width: 500px; margin: 0 auto; box-shadow: 4px 4px 0px black; text-align: left; }
-        .text-rojo { color: #d32f2f; font-weight: bold; }
-        .btn-volver { display: block; text-align: center; margin-top: 30px; padding: 15px; background-color: black; color: white; text-decoration: none; border-radius: 4px; font-weight: bold; }
-        
-        /* Estilos para la lista del historial */
-        .historial-box { max-height: 250px; overflow-y: auto; border: 2px solid #eee; border-radius: 4px; padding: 10px; margin-top: 15px; }
-        .historial-item { border-bottom: 1px solid #eee; padding: 10px 0; display: flex; justify-content: space-between; align-items: center; }
-        .historial-item:last-child { border-bottom: none; }
-        .fecha { font-size: 0.8rem; color: #666; }
+        :root {
+            --rojo-principal: #D32F2F;
+            --fondo-crema: #F7F5F0;
+            --texto-oscuro: #1A1A1A;
+            --borde-fino: 2px solid var(--texto-oscuro);
+            --sombra-solida: 4px 4px 0px var(--texto-oscuro);
+        }
+
+        body { 
+            background-color: var(--fondo-crema); 
+            font-family: 'Outfit', sans-serif; 
+            text-align: center; 
+            color: var(--texto-oscuro); 
+            margin: 0;
+            padding: 30px 10px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-sizing: border-box;
+        }
+
+        h1 { 
+            font-family: 'Oswald', sans-serif;
+            color: var(--rojo-principal); 
+            font-size: 3rem; 
+            font-weight: 900; 
+            margin-top: 0;
+            margin-bottom: 20px; 
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .card { 
+            background: white; 
+            border: var(--borde-fino); 
+            border-radius: 6px; 
+            padding: 35px 20px; 
+            width: 100%;
+            max-width: 450px; 
+            box-sizing: border-box;
+            box-shadow: var(--sombra-solida); 
+            text-align: left; 
+        }
+
+        .text-rojo { 
+            color: var(--rojo-principal); 
+            font-weight: bold; 
+        }
+
+        h3 {
+            font-family: 'Oswald', sans-serif;
+            margin-top: 0;
+            margin-bottom: 8px;
+            font-size: 1.4rem;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        /* Estilos optimizados para la lista del historial en móviles */
+        .historial-box { 
+            max-height: 220px; 
+            overflow-y: auto; 
+            border: var(--borde-fino); 
+            border-radius: 4px; 
+            padding: 10px 15px; 
+            margin-top: 15px; 
+            background-color: var(--fondo-crema);
+            /* Scroll suave para pantallas táctiles */
+            -webkit-overflow-scrolling: touch; 
+        }
+
+        .historial-item { 
+            border-bottom: 1px solid rgba(0,0,0,0.1); 
+            padding: 12px 0; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            gap: 10px;
+        }
+        .historial-item:last-child { 
+            border-bottom: none; 
+        }
+
+        .historial-item strong {
+            font-size: 0.95rem;
+            text-transform: capitalize;
+        }
+
+        .fecha { 
+            font-size: 0.8rem; 
+            color: #666; 
+            white-space: nowrap; /* Evita que la fecha se parta en dos líneas en pantallas pequeñas */
+        }
+
+        .btn-volver { 
+            display: block; 
+            width: 100%; 
+            text-align: center; 
+            margin-top: 25px; 
+            padding: 15px; 
+            background-color: var(--texto-oscuro); 
+            color: white; 
+            font-family: 'Oswald', sans-serif;
+            text-transform: uppercase;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            text-decoration: none; 
+            border-radius: 4px; 
+            font-weight: bold; 
+            border: var(--borde-fino);
+            box-sizing: border-box;
+            transition: transform 0.1s, background-color 0.1s;
+        }
+        .btn-volver:hover, .btn-volver:active { 
+            background-color: #333; 
+            transform: translateY(2px);
+        }
+
+        hr { 
+            border: 0;
+            border-top: var(--borde-fino); 
+            opacity: 0.15;
+            margin: 20px 0; 
+        }
     </style>
 </head>
 <body>
-    <h1 style="color: #d32f2f; font-size: 3rem; margin-bottom: 10px;">MI PERFIL</h1>
+
+    <h1>MI PERFIL</h1>
+    
     <div class="card">
-        <p style="margin: 5px 0;"><strong>Usuario:</strong> {{ user.username }}</p>
-        <p style="margin: 5px 0;"><strong>Miembro desde:</strong> {{ user.date_joined|date:"d/m/Y" }}</p>
+        <p style="margin: 5px 0; font-size: 1.05rem;"><strong>Usuario:</strong> <span class="text-rojo">{{ user.username }}</span></p>
+        <p style="margin: 5px 0; color: #555; font-size: 0.95rem;"><strong>Miembro desde:</strong> {{ user.date_joined|date:"d/m/Y" }}</p>
         
-        <hr style="border: 1px solid #eee; margin: 20px 0;">
+        <hr>
         
-        <h3 style="margin-bottom: 5px;">Estadísticas de Análisis</h3>
-        <p>Has analizado un total de <span class="text-rojo" style="font-size: 1.2rem;">{{ total_analisis }}</span> platos.</p>
+        <h3>Estadísticas de Análisis</h3>
+        <p style="margin-bottom: 5px;">Has analizado un total de <span class="text-rojo" style="font-size: 1.3rem;">{{ total_analisis }}</span> platos.</p>
         
         <div class="historial-box">
             {% if historial %}
@@ -36,11 +157,12 @@
                     </div>
                 {% endfor %}
             {% else %}
-                <p style="text-align: center; color: #888; font-style: italic; margin-top: 20px;">Aún no has analizado ningún plato.</p>
+                <p style="text-align: center; color: #777; font-style: italic; margin-top: 20px; font-size: 0.9rem;">Aún no has analizado ningún plato.</p>
             {% endif %}
         </div>
         
         <a href="{% url 'escaner' %}" class="btn-volver">← VOLVER AL ESCÁNER</a>
     </div>
+
 </body>
 </html>

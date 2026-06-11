@@ -24,3 +24,5 @@ prueba*.jpg
 prueba*.jpeg
 dataset_comida_grande/
 dataset_comida/
+probar_modelo.py
+prueba_dataset.py

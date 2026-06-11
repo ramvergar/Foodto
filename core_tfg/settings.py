@@ -23,7 +23,7 @@ SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'django-insecure-default-key-change-
 
 DEBUG = os.getenv('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['192.168.1.132', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -115,8 +115,8 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-# Hacia dónde va el usuario al iniciar sesión con éxito
 LOGIN_REDIRECT_URL = 'escaner'
 
-# Hacia dónde va el usuario al cerrar sesión
 LOGOUT_REDIRECT_URL = 'inicio'
+
+LOGIN_URL = 'login'
