@@ -24,5 +24,30 @@ prueba*.jpg
 prueba*.jpeg
 dataset_comida_grande/
 dataset_comida/
+dataset_comida_grande_donuts_duplicado_ignorar/
 probar_modelo.py
 prueba_dataset.py
+metricas.py
+docs/metricas_finales_tfg.txt
+
+# Herramientas de IA / entorno de trabajo (no debe aparecer nada de esto en el repo)
+.claude/
+
+# Material de la memoria (vive en Overleaf, no en el repo de codigo)
+memoria/
+metricas_tfg/
+arquitectura.drawio
+
+# Scripts auxiliares de analisis/metricas (uso local, no forman parte de la app)
+scripts/
+
+# Modelos antiguos / intermedios (solo se sube el modelo en produccion)
+Foodto/mi_modelo_comida.pth
+Foodto/modelo_v1.pth
+Foodto/modelo_ultimate_v1_backup.pth
+mejor_modelo_foodto.pth
+modelo_ultimatev2.pth
+modelo_ultimatev2_clases.json
+
+# Logs de entrenamiento
+*.log

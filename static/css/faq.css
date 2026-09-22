@@ -1,0 +1,39 @@
+.faq{
+
+    background:white;
+
+}
+
+.faq-container{
+
+    max-width:900px;
+
+    margin:auto;
+
+    margin-top:60px;
+
+}
+
+.faq-item{
+
+    background:var(--cream);
+
+    margin-bottom:20px;
+
+    padding:30px;
+
+    border:var(--border);
+
+    border-radius:12px;
+
+    box-shadow:var(--shadow);
+
+}
+
+.faq-item h3{
+
+    color:var(--primary);
+
+    margin-bottom:15px;
+
+}

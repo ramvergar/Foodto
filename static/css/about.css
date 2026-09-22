@@ -1,0 +1,39 @@
+.about{
+
+    background:white;
+
+}
+
+.about-grid{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:60px;
+
+    align-items:center;
+
+}
+
+.about-card{
+
+    background:var(--cream);
+
+    padding:40px;
+
+    border:var(--border);
+
+    border-radius:12px;
+
+    box-shadow:var(--shadow);
+
+}
+
+.about-card h3{
+
+    color:var(--primary);
+
+    margin-bottom:15px;
+
+}

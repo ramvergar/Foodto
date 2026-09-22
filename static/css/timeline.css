@@ -1,0 +1,79 @@
+.timeline{
+
+    background:var(--cream);
+
+}
+
+.timeline-container{
+
+    max-width:900px;
+
+    margin:auto;
+
+    margin-top:60px;
+
+}
+
+.timeline-item{
+
+    position:relative;
+
+    padding-left:80px;
+
+    margin-bottom:60px;
+
+}
+
+.timeline-item::before{
+
+    content:"";
+
+    position:absolute;
+
+    left:20px;
+    top:0;
+
+    width:20px;
+    height:20px;
+
+    background:var(--primary);
+
+    border-radius:50%;
+
+}
+
+.timeline-item::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:29px;
+    top:20px;
+
+    width:2px;
+    height:100%;
+
+    background:#ccc;
+
+}
+
+.timeline-item:last-child::after{
+
+    display:none;
+
+}
+
+.timeline-content{
+
+    background:white;
+
+    padding:30px;
+
+    border:var(--border);
+
+    border-radius:12px;
+
+    box-shadow:var(--shadow);
+
+}

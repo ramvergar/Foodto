@@ -1,0 +1,195 @@
+
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+
+    font-family:'Manrope',sans-serif;
+
+    color:var(--black);
+
+    background:
+        radial-gradient(circle at top right, rgba(211,47,47,.06), transparent 35%),
+        radial-gradient(circle at bottom left, rgba(211,47,47,.04), transparent 30%),
+        var(--cream);
+
+    overflow-x:hidden;
+
+}
+
+.container{
+
+    width:min(92%,1200px);
+
+    margin:auto;
+
+}
+
+
+section{
+
+    padding:110px 0;
+
+}
+
+img{
+
+    display:block;
+
+    max-width:100%;
+
+}
+
+a{
+
+    text-decoration:none;
+
+}
+
+
+h1,
+h2,
+h3,
+h4{
+
+    font-family:'Manrope',sans-serif;
+
+    color:var(--black);
+
+    font-weight:800;
+
+    letter-spacing:-1px;
+
+}
+
+h1{
+
+    font-size:4rem;
+
+    line-height:1.05;
+
+}
+
+h2{
+
+    font-size:2.8rem;
+
+    margin-bottom:20px;
+
+}
+
+h3{
+
+    font-size:1.35rem;
+
+}
+
+p{
+
+    color:#6B7280;
+
+    font-size:1.05rem;
+
+    line-height:1.8;
+
+}
+
+.title{
+
+    text-align:center;
+
+    margin-bottom:20px;
+
+}
+
+.subtitle{
+
+    max-width:700px;
+
+    margin:auto;
+
+    text-align:center;
+
+    margin-bottom:70px;
+
+}
+
+
+.btn{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:16px 34px;
+
+    border-radius:14px;
+
+    font-weight:700;
+
+    font-size:.95rem;
+
+    transition:.3s;
+
+    cursor:pointer;
+
+}
+
+.btn-primary{
+
+    background:var(--primary);
+
+    color:white;
+
+    box-shadow:0 12px 30px rgba(211,47,47,.22);
+
+}
+
+.btn-primary:hover{
+
+    transform:translateY(-4px);
+
+    background:var(--primary-hover);
+
+    box-shadow:0 20px 40px rgba(211,47,47,.35);
+
+}
+
+.btn-secondary{
+
+    background:white;
+
+    color:var(--black);
+
+    border:1px solid #E5E7EB;
+
+    box-shadow:0 8px 25px rgba(0,0,0,.05);
+
+}
+
+.btn-secondary:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:0 18px 35px rgba(0,0,0,.10);
+
+}
+
+
+::selection{
+
+    background:var(--primary);
+
+    color:white;
+
+}

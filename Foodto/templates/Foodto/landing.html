@@ -1,0 +1,349 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Foodto | Inteligencia Artificial para la Seguridad Alimentaria</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'css/variables.css' %}">
+<link rel="stylesheet" href="{% static 'css/global.css' %}">
+<link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+<link rel="stylesheet" href="{% static 'css/hero.css' %}">
+<link rel="stylesheet" href="{% static 'css/about.css' %}">
+<link rel="stylesheet" href="{% static 'css/features.css' %}">
+<link rel="stylesheet" href="{% static 'css/tech.css' %}">
+<link rel="stylesheet" href="{% static 'css/timeline.css' %}">
+<link rel="stylesheet" href="{% static 'css/faq.css' %}">
+<link rel="stylesheet" href="{% static 'css/footer.css' %}">
+<link rel="stylesheet" href="{% static 'css/responsive.css' %}">
+</head>
+<body>
+  <nav>
+    <div class="container navbar">
+      <a href="#" class="logo">FOODTO.</a>
+      <div class="nav-links">
+        <a href="#about">¿Qué es?</a>
+        <a href="#features">Características</a>
+        <a href="#technology">Tecnologías</a>
+        <a href="#faq">FAQ</a>
+      </div>
+      <div class="nav-buttons">
+        <a href="{% url 'login' %}" class="btn btn-secondary">Iniciar sesión</a>
+        <a href="{% url 'registro' %}" class="btn btn-primary">Crear cuenta</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-text">
+        <h1>FOODTO.</h1>
+        <h2>La Inteligencia Artificial que analiza tu comida.</h2>
+        <p>Foodto es una plataforma desarrollada como Trabajo Fin de Grado que combina Visión Artificial e Inteligencia Artificial para identificar platos de comida mediante una fotografía y detectar automáticamente los posibles alérgenos presentes.</p>
+        <div class="hero-buttons">
+          <a href="{% url 'login' %}" class="btn btn-primary">Comenzar ahora</a>
+          <a href="#about" class="btn btn-secondary">Descubrir más</a>
+        </div>
+      </div>
+      <div class="hero-image">
+        <div class="hero-visual">
+          <div class="scan-frame">
+            <div class="scan-line"></div>
+            <span class="scan-emoji">🍽️</span>
+          </div>
+          <div class="mini-result">
+            <div class="mini-result-row">
+              <span class="mini-label">Plato detectado</span>
+              <strong>Paella</strong>
+            </div>
+            <div class="mini-result-row">
+              <span class="mini-label">Confianza</span>
+              <strong>98%</strong>
+            </div>
+            <div class="mini-risk">⚠️ Riesgo medio · Mariscos</div>
+          </div>
+        </div>
+        <div class="tech-bubbles">
+          <div class="bubble bubble-1">
+            <span class="logo logo-django" aria-hidden="true">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor"><path d="M11.146 0h3.924v18.166c-2.013.382-3.491.535-5.096.535-4.791 0-7.288-2.166-7.288-6.32 0-4.002 2.65-6.6 6.753-6.6.637 0 1.121.05 1.707.203zm0 9.143a3.894 3.894 0 00-1.325-.204c-1.988 0-3.134 1.223-3.134 3.365 0 2.09 1.096 3.236 3.109 3.236.433 0 .79-.025 1.35-.102V9.142zM21.314 6.06v9.098c0 3.134-.229 4.638-.917 5.937-.637 1.249-1.478 2.039-3.211 2.905l-3.644-1.733c1.733-.815 2.574-1.53 3.109-2.625.561-1.121.739-2.421.739-5.835V6.059h3.924zM17.39.021h3.924v4.026H17.39z"/></svg>
+            </span>
+            Django
+          </div>
+          <div class="bubble bubble-2">
+            <span class="logo logo-pytorch" aria-hidden="true">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor"><path d="M12.005 0L4.952 7.053a9.865 9.865 0 000 14.022 9.866 9.866 0 0014.022 0c3.984-3.9 3.986-10.205.085-14.023l-1.744 1.743c2.904 2.905 2.904 7.634 0 10.538s-7.634 2.904-10.538 0-2.904-7.634 0-10.538l4.647-4.646.582-.665zm3.568 3.899a1.327 1.327 0 00-1.327 1.327 1.327 1.327 0 001.327 1.328A1.327 1.327 0 0016.9 5.226 1.327 1.327 0 0015.573 3.9z"/></svg>
+            </span>
+            PyTorch
+          </div>
+          <div class="bubble bubble-3">
+            <span class="logo logo-resnet" aria-hidden="true">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+                  <line x1="4" y1="6" x2="12" y2="4"/><line x1="4" y1="6" x2="12" y2="12"/>
+                  <line x1="4" y1="18" x2="12" y2="12"/><line x1="4" y1="18" x2="12" y2="20"/>
+                  <line x1="12" y1="4" x2="20" y2="8"/><line x1="12" y1="12" x2="20" y2="8"/>
+                  <line x1="12" y1="12" x2="20" y2="16"/><line x1="12" y1="20" x2="20" y2="16"/>
+                </g>
+                <g fill="currentColor">
+                  <circle cx="4" cy="6" r="2.2"/><circle cx="4" cy="18" r="2.2"/>
+                  <circle cx="12" cy="4" r="2.2"/><circle cx="12" cy="12" r="2.2"/><circle cx="12" cy="20" r="2.2"/>
+                  <circle cx="20" cy="8" r="2.2"/><circle cx="20" cy="16" r="2.2"/>
+                </g>
+              </svg>
+            </span>
+            ResNet18
+          </div>
+          <div class="bubble bubble-4">
+            <span class="logo logo-groq" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33"><path fill="#F43E01" d="M.54.39h32v32h-32z"/><path fill="#fff" d="m18.445 4.406-9.468 13.74 7.341.665-1.69 9.578 9.469-13.74-7.342-.664 1.69-9.579Z"/></svg>
+            </span>
+            Groq
+          </div>
+          <div class="bubble bubble-5">
+            <span class="logo logo-sqlite" aria-hidden="true">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor"><path d="M21.678.521c-1.032-.92-2.28-.55-3.513.544a8.71 8.71 0 0 0-.547.535c-2.109 2.237-4.066 6.38-4.674 9.544.237.48.422 1.093.544 1.561a13.044 13.044 0 0 1 .164.703s-.019-.071-.096-.296l-.05-.146a1.689 1.689 0 0 0-.033-.08c-.138-.32-.518-.995-.686-1.289-.143.423-.27.818-.376 1.176.484.884.778 2.4.778 2.4s-.025-.099-.147-.442c-.107-.303-.644-1.244-.772-1.464-.217.804-.304 1.346-.226 1.478.152.256.296.698.422 1.186.286 1.1.485 2.44.485 2.44l.017.224a22.41 22.41 0 0 0 .056 2.748c.095 1.146.273 2.13.5 2.657l.155-.084c-.334-1.038-.47-2.399-.41-3.967.09-2.398.642-5.29 1.661-8.304 1.723-4.55 4.113-8.201 6.3-9.945-1.993 1.8-4.692 7.63-5.5 9.788-.904 2.416-1.545 4.684-1.931 6.857.666-2.037 2.821-2.912 2.821-2.912s1.057-1.304 2.292-3.166c-.74.169-1.955.458-2.362.629-.6.251-.762.337-.762.337s1.945-1.184 3.613-1.72C21.695 7.9 24.195 2.767 21.678.521m-18.573.543A1.842 1.842 0 0 0 1.27 2.9v16.608a1.84 1.84 0 0 0 1.835 1.834h9.418a22.953 22.953 0 0 1-.052-2.707c-.006-.062-.011-.141-.016-.2a27.01 27.01 0 0 0-.473-2.378c-.121-.47-.275-.898-.369-1.057-.116-.197-.098-.31-.097-.432 0-.12.015-.245.037-.386a9.98 9.98 0 0 1 .234-1.045l.217-.028c-.017-.035-.014-.065-.031-.097l-.041-.381a32.8 32.8 0 0 1 .382-1.194l.2-.019c-.008-.016-.01-.038-.018-.053l-.043-.316c.63-3.28 2.587-7.443 4.8-9.791.066-.069.133-.128.198-.194Z"/></svg>
+            </span>
+            SQLite
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">🧠</div>
+          <h3>Deep Learning</h3>
+          <p>Modelo ResNet18 entrenado para reconocer alimentos mediante visión artificial.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">⚡</div>
+          <h3>Análisis rápido</h3>
+          <p>Procesamiento automático de imágenes y generación del informe en pocos segundos.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🔒</div>
+          <h3>Historial seguro</h3>
+          <p>Cada usuario dispone de un historial privado con todos sus análisis realizados.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about" class="about">
+    <div class="container">
+      <h2 class="title">¿Qué es Foodto?</h2>
+      <p class="subtitle">Una plataforma web inteligente diseñada para mejorar la seguridad alimentaria mediante el uso de modelos de Inteligencia Artificial.</p>
+      <br><br><br>
+      <div class="about-grid">
+        <div>
+          <h2 style="margin-bottom:20px;color:var(--primary);">Inteligencia Artificial aplicada a la alimentación</h2>
+          <p>Foodto permite analizar una fotografía de un plato para reconocer el alimento mediante un modelo de Deep Learning basado en ResNet18.</p>
+          <br>
+          <p>Una vez identificado, un modelo de lenguaje genera automáticamente un informe detallado indicando los posibles alérgenos presentes, proporcionando una ayuda rápida para personas con alergias o intolerancias alimentarias.</p>
+          <br>
+          <p>Todo el proceso se realiza desde una interfaz sencilla y accesible para cualquier usuario.</p>
+        </div>
+        <div class="about-card">
+          <h3>Objetivos del proyecto</h3>
+          <br>
+          <p>✔ Reconocer alimentos mediante visión artificial.</p>
+          <br>
+          <p>✔ Detectar automáticamente posibles alérgenos.</p>
+          <br>
+          <p>✔ Facilitar una herramienta de apoyo para mejorar la seguridad alimentaria.</p>
+          <br>
+          <p>✔ Integrar modelos modernos de Inteligencia Artificial dentro de una aplicación web.</p>
+          <br>
+          <p>✔ Sentar las bases para futuras funcionalidades orientadas a personas con discapacidad visual.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="features" class="features">
+    <div class="container">
+      <h2 class="title" style="text-align:center;">¿Cómo funciona Foodto?</h2>
+      <p class="subtitle">El proceso completo dura solo unos segundos y está diseñado para ser sencillo, rápido e intuitivo.</p>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">📷</div>
+          <h3>1. Captura una imagen</h3>
+          <p>El usuario toma una fotografía del plato o selecciona una imagen desde su dispositivo.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🧠</div>
+          <h3>2. La IA reconoce el alimento</h3>
+          <p>Un modelo ResNet18 entrenado con PyTorch identifica el tipo de comida mediante visión artificial.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">⚠️</div>
+          <h3>3. Obtén el análisis</h3>
+          <p>Un modelo de lenguaje genera automáticamente un informe con los posibles alérgenos detectados.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="technology" class="tech">
+    <div class="container">
+      <h2 class="title" style="text-align:center;">Tecnologías utilizadas</h2>
+      <p class="subtitle">Foodto integra diferentes tecnologías modernas para ofrecer una solución basada en Inteligencia Artificial.</p>
+      <div class="tech-grid">
+        <div class="tech-card">
+          <h3>Django</h3>
+          <p>Framework utilizado para desarrollar toda la aplicación web, gestionar usuarios y administrar el historial.</p>
+        </div>
+        <div class="tech-card">
+          <h3>PyTorch</h3>
+          <p>Biblioteca de Deep Learning utilizada para entrenar y ejecutar el modelo de clasificación.</p>
+        </div>
+        <div class="tech-card">
+          <h3>ResNet18</h3>
+          <p>Red neuronal convolucional entrenada para reconocer alimentos a partir de imágenes.</p>
+        </div>
+        <div class="tech-card">
+          <h3>Groq</h3>
+          <p>Plataforma utilizada para realizar inferencias rápidas sobre modelos de lenguaje.</p>
+        </div>
+        <div class="tech-card">
+          <h3>GPT-OSS</h3>
+          <p>Modelo de lenguaje ejecutado sobre Groq, encargado de generar una explicación clara de los posibles alérgenos encontrados.</p>
+        </div>
+        <div class="tech-card">
+          <h3>SQLite</h3>
+          <p>Base de datos utilizada para almacenar usuarios e historial de análisis realizados.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="timeline">
+    <div class="container">
+      <h2 class="title" style="text-align:center;">Arquitectura del sistema</h2>
+      <p class="subtitle">Cada componente de Foodto participa en una cadena de procesamiento inteligente para obtener un análisis completo.</p>
+      <div class="timeline-container">
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <h3>Captura de la imagen</h3>
+            <p>El usuario envía una fotografía del plato desde la interfaz web.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <h3>Clasificación mediante IA</h3>
+            <p>El modelo ResNet18 identifica automáticamente el alimento presente en la imagen.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <h3>Análisis de alérgenos</h3>
+            <p>El nombre del alimento es enviado a un modelo de lenguaje vía Groq, que genera un informe sobre los posibles alérgenos.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <h3>Resultado final</h3>
+            <p>El usuario recibe un informe claro, comprensible y queda almacenado en su historial personal.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq" class="faq">
+    <div class="container">
+      <h2 class="title" style="text-align:center;">Preguntas frecuentes</h2>
+      <p class="subtitle">Algunas dudas habituales sobre el funcionamiento de Foodto.</p>
+      <div class="faq-container">
+        <div class="faq-item">
+          <h3>¿Foodto sustituye la información del fabricante?</h3>
+          <p>No. Foodto es una herramienta de apoyo basada en Inteligencia Artificial que ayuda a identificar posibles alérgenos, pero siempre debe complementarse con la información oficial del fabricante o del establecimiento.</p>
+        </div>
+        <div class="faq-item">
+          <h3>¿Qué precisión tiene el reconocimiento?</h3>
+          <p>El sistema utiliza un modelo ResNet18 entrenado para clasificación de alimentos. La precisión depende de la calidad de la fotografía y del alimento mostrado.</p>
+        </div>
+        <div class="faq-item">
+          <h3>¿Se almacenan mis análisis?</h3>
+          <p>Sí. Cada usuario dispone de un historial privado donde puede consultar todos los análisis realizados desde su cuenta.</p>
+        </div>
+        <div class="faq-item">
+          <h3>¿Qué tecnologías utiliza?</h3>
+          <p>Django, PyTorch, ResNet18, SQLite y Groq para combinar visión artificial con modelos de lenguaje.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:var(--primary);color:white;">
+    <div class="container" style="text-align:center;">
+      <h2 style="font-size:3rem;margin-bottom:20px;">Empieza a analizar tus alimentos con IA</h2>
+      <p style="max-width:750px;margin:auto;color:white;font-size:1.15rem;line-height:1.8;">Descubre cómo la Inteligencia Artificial puede ayudarte a identificar posibles alérgenos en cuestión de segundos mediante una simple fotografía.</p>
+      <br><br>
+      <a href="{% url 'login' %}" class="btn" style="margin-left:20px;background:white;color:rgb(24, 24, 24);border:2px solid rgb(51, 51, 51);"">Iniciar sesión</a>
+      <a href="{% url 'registro' %}" class="btn" style="margin-left:20px;background:white;color:var(--primary);border:2px solid white;">Crear cuenta</a>
+    </div>
+  </section>
+
+  <footer id="contact">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <h2 class="footer-logo">FOODTO.</h2>
+          <br>
+          <p>Sistema Inteligente de Análisis Visual de Alérgenos mediante Inteligencia Artificial.</p>
+          <br>
+          <p>Trabajo Fin de Grado</p>
+          <p>Ingeniería Informática del Software</p>
+          <p>Universidad de Sevilla</p>
+        </div>
+        <div>
+          <h3>Navegación</h3>
+          <br>
+          <p><a href="#about">¿Qué es?</a></p>
+          <p><a href="#features">Características</a></p>
+          <p><a href="#technology">Tecnologías</a></p>
+          <p><a href="#faq">FAQ</a></p>
+        </div>
+        <div>
+          <h3>Acceso</h3>
+          <br>
+          <p><a href="{% url 'login' %}">Iniciar sesión</a></p>
+          <p><a href="{% url 'registro' %}">Crear cuenta</a></p>
+        </div>
+      </div>
+      <hr style="margin:60px 0;border:1px solid rgba(255,255,255,.15);">
+      <div style="text-align:center;">
+        <p style="color:#aaa;">© 2026 Foodto · Trabajo Fin de Grado · Universidad de Sevilla</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.animate([
+            { opacity: 0, transform: "translateY(40px)" },
+            { opacity: 1, transform: "translateY(0)" }
+          ], {
+            duration: 700,
+            fill: "forwards"
+          });
+        }
+      });
+    });
+
+    document.querySelectorAll("section,.feature-card,.tech-card,.faq-item,.timeline-item").forEach((el) => {
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+.tech{
+
+    background:linear-gradient(to bottom,#ffffff,#fafafa);
+
+}
+
+.tech-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+
+    gap:30px;
+
+    margin-top:70px;
+
+}
+
+.tech-card{
+
+    background:#ffffff;
+
+    border:1px solid #E8E8E8;
+
+    border-radius:18px;
+
+    padding:40px 30px;
+
+    text-align:center;
+
+    transition:all .3s ease;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.06);
+
+}
+
+.tech-card:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:0 20px 45px rgba(0,0,0,.12);
+
+}
+
+.tech-card h3{
+
+    font-size:1.45rem;
+
+    font-weight:700;
+
+    color:var(--primary);
+
+    margin-bottom:15px;
+
+}
+
+.tech-card p{
+
+    color:#6B7280;
+
+    font-size:1rem;
+
+    line-height:1.7;
+
+}
+
+.tech-card img{
+
+    width:70px;
+
+    height:70px;
+
+    margin:0 auto 25px;
+
+    object-fit:contain;
+
+}

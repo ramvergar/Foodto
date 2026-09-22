@@ -1,0 +1,112 @@
+nav{
+
+    background:rgba(255,255,255,.75);
+
+    backdrop-filter:blur(18px);
+
+    border-bottom:1px solid #ececec;
+
+}
+
+.navbar{
+
+    height:80px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+}
+
+.logo{
+
+    font-family:'Oswald',sans-serif;
+
+    font-size:2.2rem;
+
+    color:var(--primary);
+
+    letter-spacing:2px;
+
+}
+
+.nav-links{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:40px;
+
+}
+
+.nav-links a{
+
+    color:var(--black);
+
+    font-weight:500;
+
+    transition:.2s;
+
+}
+
+.nav-links a:hover{
+
+    color:var(--primary);
+
+}
+
+.nav-buttons{
+
+    display:flex;
+
+    gap:15px;
+
+}
+
+.nav-user{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:20px;
+
+}
+
+.nav-user span{
+
+    font-size:.95rem;
+
+    color:var(--black);
+
+}
+
+.nav-user .nav-link{
+
+    color:var(--black);
+
+    font-weight:600;
+
+    font-size:.95rem;
+
+    transition:.2s;
+
+}
+
+.nav-user .nav-link:hover,
+.nav-user .nav-link.active{
+
+    color:var(--primary);
+
+}
+
+.nav-user form{
+
+    display:inline-flex;
+
+    margin:0;
+
+}
