@@ -33,26 +33,32 @@ def obtener_analisis_clinico_llama(nombre_plato):
         "}" 
     )
 
-    try:
-        chat_completion = client.chat.completions.create(
-            model="openai/gpt-oss-20b",
-            messages=[
-                {"role": "system", "content": prompt_sistema},
-                {"role": "user", "content": f"Plato: {nombre_plato}"}
-            ],
-            response_format={"type": "json_object"},  
-            temperature=0.2  
-        )
-        return json.loads(chat_completion.choices[0].message.content)
+    intentos_maximos = 2
+    ultimo_error = None
 
-    except Exception as e:
-        print(f"\nERROR EN LA LLAMADA A GROQ: {e}\n")
-        
-        return {
-            "riesgo": "MEDIO",
-            "alergenos": ["Clasificación temporal no disponible"],
-            "info": f"No se pudo conectar de forma dinámica con el módulo de análisis clínico (Llama API). Por precaución, consulte los ingredientes con el establecimiento."
-        }
+    for intento in range(1, intentos_maximos + 1):
+        try:
+            chat_completion = client.chat.completions.create(
+                model="openai/gpt-oss-20b",
+                messages=[
+                    {"role": "system", "content": prompt_sistema},
+                    {"role": "user", "content": f"Plato: {nombre_plato}"}
+                ],
+                response_format={"type": "json_object"},
+                temperature=0.2
+            )
+            return json.loads(chat_completion.choices[0].message.content)
+
+        except Exception as e:
+            ultimo_error = e
+            print(f"\nERROR EN LA LLAMADA A GROQ (intento {intento}/{intentos_maximos}): {e}\n")
+
+    print(f"\nSe agotaron los reintentos con Groq. Ultimo error: {ultimo_error}\n")
+    return {
+        "riesgo": "MEDIO",
+        "alergenos": ["Clasificación temporal no disponible"],
+        "info": "No se pudo conectar de forma dinámica con el módulo de análisis clínico. Por precaución, consulte los ingredientes con el establecimiento."
+    }
 
 
 def inicio_view(request):
