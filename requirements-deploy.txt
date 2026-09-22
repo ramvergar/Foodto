@@ -1,0 +1,17 @@
+# Dependencias minimas para EJECUTAR la web en produccion (Render, Railway, VPS...).
+# No incluye herramientas de entrenamiento/evaluacion (matplotlib, pandas, datasets...),
+# esas siguen viviendo solo en requirements.txt para uso en local.
+#
+# Usa torch en su version CPU (mucho mas ligera que la CUDA de requirements.txt,
+# imprescindible porque los hostings gratuitos/baratos no tienen GPU).
+
+Django==5.2.14
+python-dotenv==1.2.2
+pillow==12.2.0
+groq==1.6.0
+gunicorn==26.2.0
+whitenoise==6.12.0
+
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch==2.5.1
+torchvision==0.20.1

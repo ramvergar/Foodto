@@ -51,3 +51,6 @@ modelo_ultimatev2_clases.json
 
 # Logs de entrenamiento
 *.log
+
+# Generado por collectstatic (se regenera en cada build de despliegue)
+staticfiles/

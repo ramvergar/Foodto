@@ -67,7 +67,7 @@
                     <form method="POST" enctype="multipart/form-data" id="upload-form">
                         {% csrf_token %}
 
-                        <div class="upload-box" onclick="document.getElementById('foto-input').click();" style="cursor: pointer;">
+                        <div class="upload-box" id="upload-box" onclick="document.getElementById('foto-input').click();" style="cursor: pointer;">
                             <div class="upload-icon">📷</div>
                             <p id="upload-text">Selecciona o arrastra una fotografía del alimento.</p>
                             <input type="file" id="foto-input" name="foto" accept="image/*" required style="display: none;" onchange="updateFileName(this)">
@@ -99,11 +99,6 @@
                         <div>
                             <p class="label">Plato detectado</p>
                             <h2>{{ plato }}</h2>
-                        </div>
-
-                        <div class="confidence">
-                            <span>Confianza</span>
-                            <strong>{{ confianza }}%</strong>
                         </div>
                     </div>
 
@@ -201,6 +196,37 @@
                 textEl.innerHTML = `<strong>Imagen seleccionada:</strong><br>${input.files[0].name}`;
             }
         }
+
+        const uploadBox = document.getElementById('upload-box');
+        const fotoInput = document.getElementById('foto-input');
+
+        ['dragenter', 'dragover'].forEach(function (evento) {
+            uploadBox.addEventListener(evento, function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                uploadBox.classList.add('dragover');
+            });
+        });
+
+        ['dragleave', 'dragend'].forEach(function (evento) {
+            uploadBox.addEventListener(evento, function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                uploadBox.classList.remove('dragover');
+            });
+        });
+
+        uploadBox.addEventListener('drop', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            uploadBox.classList.remove('dragover');
+
+            const archivos = e.dataTransfer.files;
+            if (archivos && archivos.length > 0 && archivos[0].type.startsWith('image/')) {
+                fotoInput.files = archivos;
+                updateFileName(fotoInput);
+            }
+        });
     </script>
 </body>
 

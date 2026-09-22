@@ -47,7 +47,8 @@
     transition:.25s;
 }
 
-.upload-box:hover{
+.upload-box:hover,
+.upload-box.dragover{
     border-color:var(--primary);
     background:#FFF8F8;
 }

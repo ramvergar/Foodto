@@ -21,9 +21,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'django-insecure-default-key-change-in-production')
 
-DEBUG = os.getenv('DEBUG', 'True') == 'True'
+DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = ['192.168.1.132', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = os.getenv(
+    'ALLOWED_HOSTS', '192.168.1.132,localhost,127.0.0.1'
+).split(',')
+
+# Render (y plataformas similares) exponen el dominio publico en esta variable
+RENDER_EXTERNAL_HOSTNAME = os.getenv('RENDER_EXTERNAL_HOSTNAME')
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
 
 # Application definition
@@ -40,6 +47,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -103,7 +111,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Madrid'
 
 USE_I18N = True
 
@@ -119,8 +127,31 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
 
+# Carpeta donde `collectstatic` reune los estaticos para servirlos en produccion
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
+
 LOGIN_REDIRECT_URL = 'escaner'
 
-LOGOUT_REDIRECT_URL = 'inicio'
+LOGOUT_REDIRECT_URL = 'landing'
 
 LOGIN_URL = 'login'
+
+# Cabeceras de seguridad para HTTPS, solo cuando se ejecuta en produccion
+# (en local, con DEBUG=True, no aplican para no romper el desarrollo en HTTP)
+if not DEBUG:
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    # Render (y proxies similares) terminan el HTTPS y reenvian la peticion en
+    # HTTP por dentro; sin esto, SECURE_SSL_REDIRECT provocaria un bucle de
+    # redirecciones infinito.
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')

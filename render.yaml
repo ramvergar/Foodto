@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: foodto
+    env: python
+    plan: free
+    buildCommand: "pip install -r requirements-deploy.txt && python manage.py collectstatic --noinput && python manage.py migrate"
+    startCommand: "gunicorn core_tfg.wsgi:application"
+    envVars:
+      - key: DJANGO_SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: "False"
+      - key: GROQ_API_KEY
+        sync: false
+      - key: PYTHON_VERSION
+        value: "3.11.9"
