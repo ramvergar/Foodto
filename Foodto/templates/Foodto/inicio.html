@@ -1,119 +1,48 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Foodto - Inicio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
-    
-    <style>
-        :root {
-            --rojo-principal: #D32F2F;
-            --fondo-crema: #F7F5F0;
-            --texto-oscuro: #1A1A1A;
-            --borde-fino: 2px solid var(--texto-oscuro);
-            --sombra-solida: 4px 4px 0px var(--texto-oscuro);
-        }
+    <title>Foodto - Acceso</title>
 
-        body { 
-            background-color: var(--fondo-crema); 
-            font-family: 'Outfit', sans-serif; 
-            text-align: center; 
-            color: var(--texto-oscuro); 
-            margin: 0;
-            padding: 20px 10px;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            box-sizing: border-box;
-        }
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-        h1.logo { 
-            font-family: 'Oswald', sans-serif;
-            color: var(--rojo-principal); 
-            font-size: 3.5rem; 
-            font-weight: 900; 
-            margin-top: 0;
-            margin-bottom: 5px; 
-            letter-spacing: 2px; 
-        }
-
-        p.subtitle { 
-            color: #555; 
-            font-size: 0.85rem; 
-            letter-spacing: 1px; 
-            margin-top: 0;
-            margin-bottom: 30px; 
-            text-transform: uppercase; 
-        }
-
-        .card { 
-            background: white; 
-            border: var(--borde-fino); 
-            border-radius: 6px; 
-            padding: 35px 20px; 
-            width: 100%;
-            max-width: 400px; 
-            box-sizing: border-box;
-            box-shadow: var(--sombra-solida); 
-        }
-
-        h2 {
-            font-family: 'Oswald', sans-serif;
-            margin-top: 0;
-            font-size: 1.6rem;
-            letter-spacing: 0.5px;
-        }
-
-        .btn { 
-            display: block; 
-            width: 100%; 
-            padding: 15px; 
-            margin: 15px 0; 
-            text-decoration: none; 
-            font-family: 'Oswald', sans-serif;
-            font-weight: bold; 
-            font-size: 1.2rem; 
-            letter-spacing: 1px;
-            border: var(--borde-fino); 
-            border-radius: 4px; 
-            cursor: pointer; 
-            text-transform: uppercase; 
-            box-sizing: border-box; 
-            transition: transform 0.1s, background-color 0.1s; 
-        }
-
-        .btn-login { 
-            background-color: #ffffff; 
-            color: var(--texto-oscuro); 
-        }
-        .btn-login:hover, .btn-login:active { 
-            background-color: #f0f0f0; 
-            transform: translateY(2px);
-        }
-
-        .btn-register { 
-            background-color: var(--rojo-principal); 
-            color: white; 
-        }
-        .btn-register:hover, .btn-register:active { 
-            background-color: #b71c1c; 
-            transform: translateY(2px);
-        }
-    </style>
+    <link rel="stylesheet" href="{% static 'css/variables.css' %}">
+    <link rel="stylesheet" href="{% static 'css/global.css' %}">
+    <link rel="stylesheet" href="{% static 'css/auth.css' %}">
 </head>
-<body>
 
-    <h1 class="logo">FOODTO.</h1>
-    <p class="subtitle">SISTEMA DE ANÁLISIS VISUAL DE ALÉRGENOS</p>
-    
-    <div class="card">
-        <h2>MÓDULO DE ACCESO</h2>
-        <p style="margin-bottom: 25px; font-size: 0.95rem; color: #666;">Identifícate para iniciar el análisis neuronal.</p>
-        <a href="{% url 'login' %}" class="btn btn-login">Iniciar Sesión</a>
-        <a href="{% url 'registro' %}" class="btn btn-register">Crear Cuenta</a>
+<body class="auth-page">
+
+    <div class="auth-container">
+
+        <h1 class="auth-logo">FOODTO.</h1>
+
+        <p class="auth-subtitle">
+            Sistema de Análisis Visual de Alérgenos
+        </p>
+
+        <div class="auth-card">
+
+            <h2>Módulo de acceso</h2>
+
+            <p class="auth-description">
+                Identifícate para acceder al escáner inteligente y analizar alimentos mediante inteligencia artificial.
+            </p>
+
+            <a href="{% url 'login' %}" class="btn btn-secondary">
+                Iniciar sesión
+            </a>
+
+            <br>
+
+            <a href="{% url 'registro' %}" class="btn btn-primary">
+                Crear cuenta
+            </a>
+
+        </div>
+
     </div>
 
 </body>

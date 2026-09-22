@@ -1,3 +1,4 @@
+import json
 import os
 import time
 import numpy as np
@@ -34,7 +35,9 @@ if __name__ == "__main__":
 
     # 1. SEPARACIÓN DE TRANSFORMACIONES
     transformaciones_train = transforms.Compose([
-        transforms.Resize((224, 224)),
+        # RandomResizedCrop en vez de Resize fijo: evita deformar el plato y anade
+        # variacion de escala/encuadre, mas realista que una foto de movil.
+        transforms.RandomResizedCrop(224, scale=(0.7, 1.0)),
         transforms.RandomHorizontalFlip(),
         transforms.RandomRotation(15),
         transforms.ColorJitter(brightness=0.2, contrast=0.2), # Robustez ante cambios de luz en fotos
@@ -110,7 +113,10 @@ if __name__ == "__main__":
     for param in modelo.parameters():
         param.requires_grad = False  
 
-    # DESCONGELAMOS la última capa convolucional (layer4) para especializarla en texturas de platos
+    # DESCONGELAMOS layer3 y layer4 para especializar mas texturas de platos en las
+    # capas altas (con solo layer4 el modelo se quedaba corto de capacidad ajustable)
+    for param in modelo.layer3.parameters():
+        param.requires_grad = True
     for param in modelo.layer4.parameters():
         param.requires_grad = True
 
@@ -124,15 +130,26 @@ if __name__ == "__main__":
     )
     modelo = modelo.to(DISPOSITIVO)
 
-    criterio = nn.CrossEntropyLoss(weight=pesos_tensor)
+    # Label smoothing: evita que el modelo se vuelva sobreconfiado en clases con
+    # pocas imagenes (varias clases del dataset tienen menos de 100 fotos)
+    criterio = nn.CrossEntropyLoss(weight=pesos_tensor, label_smoothing=0.1)
 
-    # El optimizador solo actualizará las capas libres (layer4 y la nueva fc)
-    optimizador = optim.Adam(filter(lambda p: p.requires_grad, modelo.parameters()), lr=0.0001)
+    # LR discriminativo: las capas preentrenadas (layer3/layer4) solo se ajustan
+    # finamente, mientras que el clasificador nuevo (fc) parte de cero y necesita
+    # aprender mas rapido
+    optimizador = optim.Adam([
+        {'params': modelo.layer3.parameters(), 'lr': 0.00003},
+        {'params': modelo.layer4.parameters(), 'lr': 0.00005},
+        {'params': modelo.fc.parameters(), 'lr': 0.0005},
+    ])
+
+    # Reduce el LR cuando la accuracy de validacion se estanca
+    scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizador, mode='max', factor=0.5, patience=3)
 
     num_epochs = 50
     mejor_precision_val = 0.0
     epocas_sin_mejorar = 0
-    limite_paciencia = 6
+    limite_paciencia = 10
 
     print(f"Inicio de entrenamiento: {num_epochs} epocas maximas")
     print("-" * 60)
@@ -171,13 +188,18 @@ if __name__ == "__main__":
                 val_correctos += (predicted == labels).sum().item()
 
         val_acc = 100 * val_correctos / val_total
-        
+        scheduler.step(val_acc)
+
         print(f"Epoca {epoch+1:02d}/{num_epochs} | Loss: {loss_promedio:.4f} | Accuracy Val: {val_acc:.2f}%")
 
         if val_acc > mejor_precision_val:
             mejor_precision_val = val_acc
             epocas_sin_mejorar = 0
-            torch.save(modelo.state_dict(), "mejor_modelo_foodto.pth")
+            torch.save(modelo.state_dict(), "modelo_ultimatev2.pth")
+            # Guardamos el orden EXACTO de clases que vio el modelo (evita que el
+            # indice de una clase no coincida con su nombre en la app de Django)
+            with open("modelo_ultimatev2_clases.json", "w", encoding="utf-8") as f:
+                json.dump(class_names, f, ensure_ascii=False, indent=2)
             print("Actualizacion de mejor modelo realizada.")
         else:
             epocas_sin_mejorar += 1

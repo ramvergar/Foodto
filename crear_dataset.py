@@ -6,12 +6,32 @@ from io import BytesIO
 
 
 CLASES_OBJETIVO = [
-    "pizza", "hamburger", "sushi", "pasta", "steak", "salad", "cake", 
-    "ice cream", "sandwich", "hot dog", "omelette", "fried chicken", 
-    "tacos", "paella", "lasagna", "croissant", "donut", "guacamole",
-    "prawns", "salmon", "fried rice", "spaghetti bolognese", "ramen",
-    "fish and chips", "mousaka", "risotto", "cheesecake", "brownie",
-    "pancakes", "waffles"
+    "pizza",
+    "hamburger",
+    "sushi",
+    "pasta",
+    "steak",
+    "salad",
+    "cake",
+    "ice cream",
+    "sandwich",
+    "hot dog",
+    "potato omelette",
+    "fried chicken",
+    "tacos",
+    "paella",
+    "lasagna",
+    "croissant",
+    "donut",
+    "prawns",
+    "salmon",
+    "fried rice",
+    "spaghetti bolognese",
+    "ramen",
+    "risotto",
+    "cheesecake",
+    "pancakes",
+    "waffles"
 ]
 
 
@@ -57,12 +77,14 @@ for data in dataset:
     nombre_plato = data['dish_name'].lower()
     
     
+    # Se elige la clase coincidente MAS LARGA (mas especifica), no la primera de la lista.
+    # Si no, "cheesecake" cae en "cake" porque "cake" aparece antes en CLASES_OBJETIVO
+    # y "cake" in "cheesecake" tambien es True.
     clase_encontrada = None
     for clase in CLASES_OBJETIVO:
-        if clase in nombre_plato: 
-            if contadores[clase] < IMAGENES_POR_CLASE:
+        if clase in nombre_plato and contadores[clase] < IMAGENES_POR_CLASE:
+            if clase_encontrada is None or len(clase) > len(clase_encontrada):
                 clase_encontrada = clase
-                break
     
     if clase_encontrada:
         url = data['image_url']

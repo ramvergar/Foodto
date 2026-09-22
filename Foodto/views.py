@@ -35,7 +35,7 @@ def obtener_analisis_clinico_llama(nombre_plato):
 
     try:
         chat_completion = client.chat.completions.create(
-            model="llama-3.1-8b-instant",
+            model="openai/gpt-oss-20b",
             messages=[
                 {"role": "system", "content": prompt_sistema},
                 {"role": "user", "content": f"Plato: {nombre_plato}"}
@@ -59,6 +59,9 @@ def inicio_view(request):
     if request.user.is_authenticated:
         return redirect('escaner')
     return render(request, 'Foodto/inicio.html')
+
+def landing_view(request):
+    return render(request, 'Foodto/landing.html')
 
 
 def registro(request):

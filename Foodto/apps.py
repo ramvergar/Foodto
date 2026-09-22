@@ -1,3 +1,4 @@
+import json
 import os
 import torch
 import torch.nn as nn
@@ -11,8 +12,9 @@ class FoodtoConfig(AppConfig):
 
     modelo_ia = None
 
-    # !!! ATENCIÓN: Esta lista DEBE tener las 26 clases de tu dataset en ORDEN ALFABÉTICO !!!
-    # Ejemplo aproximado (añade aquí las que te falten hasta tener las 26 exactas de "dataset_comida_grande"):
+    # Lista de respaldo por si no existe modelo_ultimate_clases.json (ver ready()).
+    # DEBE coincidir EXACTAMENTE con el orden alfabetico que usa ImageFolder al entrenar
+    # (sorted() de los nombres de carpeta), no un orden escrito a mano.
     clases_ia = [
         "cake",
         "cheesecake",
@@ -24,11 +26,11 @@ class FoodtoConfig(AppConfig):
         "hot dog",
         "ice cream",
         "lasagna",
-        "omelette",
         "paella",
         "pancakes",
         "pasta",
         "pizza",
+        "potato omelette",
         "prawns",
         "ramen",
         "risotto",
@@ -40,13 +42,21 @@ class FoodtoConfig(AppConfig):
         "sushi",
         "tacos",
         "waffles",
-    ]  
+    ]
 
     def ready(self):
         """Esta función se ejecuta UNA SOLA VEZ cuando arranca el servidor Django."""
 
         if os.environ.get("RUN_MAIN") == "true":
             print("[Foodto] Despertando a la IA de reconocimiento visual...")
+
+            # 0. Si existe el JSON de clases generado por entrenar_modelo.py, usamos ese
+            # orden (el que realmente vio el modelo) en vez de la lista escrita a mano,
+            # para que nunca mas se desincronicen indice <-> nombre de plato.
+            ruta_clases = os.path.join(os.path.dirname(__file__), "modelo_ultimate_clases.json")
+            if os.path.exists(ruta_clases):
+                with open(ruta_clases, "r", encoding="utf-8") as f:
+                    self.clases_ia = json.load(f)
 
             # 1. Instanciamos la base de ResNet18 vacía
             modelo = models.resnet18(weights=None)
@@ -62,7 +72,7 @@ class FoodtoConfig(AppConfig):
 
             # 3. Buscamos el archivo de pesos
             ruta_modelo = os.path.join(
-                os.path.dirname(__file__), "mi_modelo_comida.pth"
+                os.path.dirname(__file__), "modelo_ultimate.pth"
             )
 
             if os.path.exists(ruta_modelo):

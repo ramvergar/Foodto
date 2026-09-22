@@ -1,203 +1,207 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Foodto | Escáner Visual</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
-    
-    <style>
-        :root {
-            --rojo-principal: #D32F2F;
-            --fondo-crema: #F7F5F0;
-            --texto-oscuro: #1A1A1A;
-            --borde-fino: 2px solid var(--texto-oscuro);
-            --sombra-solida: 4px 4px 0px var(--texto-oscuro);
-        }
+    <title>Foodto | Escáner IA</title>
 
-        body { 
-            background-color: var(--fondo-crema);
-            font-family: 'Outfit', sans-serif;
-            color: var(--texto-oscuro);
-        }
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-        h1, h2, h3, h4, h5, .titulo-oswald {
-            font-family: 'Oswald', sans-serif;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: var(--texto-oscuro);
-        }
-
-        .text-rojo { color: var(--rojo-principal) !important; }
-
-        .card { 
-            background-color: #ffffff;
-            border: var(--borde-fino);
-            border-radius: 8px;
-            box-shadow: var(--sombra-solida);
-        }
-
-        .btn-primary {
-            background-color: var(--rojo-principal);
-            border: var(--borde-fino);
-            color: white;
-            border-radius: 4px;
-            font-family: 'Oswald', sans-serif;
-            font-size: 1.2rem;
-            letter-spacing: 1px;
-            transition: transform 0.1s;
-        }
-        .btn-primary:hover, .btn-primary:active {
-            background-color: #B71C1C;
-            border: var(--borde-fino);
-            color: white;
-            transform: translateY(2px);
-        }
-
-        .form-control {
-            border: var(--borde-fino);
-            border-radius: 4px;
-        }
-        .form-control:focus {
-            box-shadow: none;
-            border-color: var(--rojo-principal);
-        }
-
-        .badge-alergeno {
-            font-size: 1rem;
-            font-weight: 600;
-            padding: 8px 16px;
-            border: var(--borde-fino);
-            border-radius: 4px;
-            margin: 4px;
-            color: var(--texto-oscuro);
-            background-color: #fff;
-        }
-        .riesgo-box {
-            border: var(--borde-fino);
-            border-radius: 4px;
-            padding: 12px;
-            font-family: 'Oswald', sans-serif;
-            font-size: 1.2rem;
-            text-align: center;
-        }
-        
-        .foto-preview { 
-            border: var(--borde-fino);
-            max-height: 280px; 
-            object-fit: cover; 
-            width: 100%; 
-            border-radius: 4px;
-        }
-
-        hr { border-color: var(--texto-oscuro); opacity: 0.2; }
-    </style>
+    <link rel="stylesheet" href="{% static 'css/variables.css' %}">
+    <link rel="stylesheet" href="{% static 'css/global.css' %}">
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/escaner.css' %}">
+    <link rel="stylesheet" href="{% static 'css/footer.css' %}">
+    <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
 </head>
+
 <body>
-    <nav style="background-color: #f8f9fa; border-bottom: 3px solid black; padding: 10px 20px; display: flex; justify-content: flex-end; align-items: center; gap: 20px;">
-    {% if user.is_authenticated %}
-        <span style="font-family: 'Outfit', sans-serif;">Usuario: <strong class="text-rojo">{{ user.username }}</strong></span>
-        <a href="{% url 'perfil' %}" style="text-decoration: none; font-size: 24px;" title="Mi Perfil">👤</a>
-        
-        <form action="{% url 'logout' %}" method="post" style="margin: 0;">
-            {% csrf_token %}
-            <button type="submit" style="background: none; border: none; color: #D32F2F; font-family: 'Oswald', sans-serif; cursor: pointer; font-weight: bold; text-transform: uppercase;">Cerrar sesión</button>
-        </form>
-    {% endif %}
-</nav>
-    <div class="container py-5">
-        <header class="text-center mb-5">
-            <h1 class="display-3 fw-bold text-rojo">FOODTO.</h1>
-            <p class="lead fw-light">SISTEMA DE ANÁLISIS VISUAL DE ALÉRGENOS</p>
-        </header>
-        
-        <div class="row justify-content-center g-4">
-            <div class="col-md-5">
-                <div class="card p-4">
-                    <h4 class="mb-3">MÓDULO DE ENTRADA</h4>
-                    <p class="text-muted small mb-4">Seleccione una imagen para iniciar el análisis neuronal.</p>
-                    
-                    <form method="POST" enctype="multipart/form-data">
+
+    <nav>
+        <div class="container navbar">
+            <a href="{% url 'landing' %}" class="logo">
+                FOODTO<span>.</span>
+            </a>
+
+            {% if user.is_authenticated %}
+            <div class="nav-user">
+                <span>Hola, <strong>{{ user.username }}</strong></span>
+                <a href="{% url 'escaner' %}" class="nav-link active">Escáner</a>
+                <a href="{% url 'perfil' %}" class="nav-link">Mi perfil</a>
+                <form action="{% url 'logout' %}" method="post">
+                    {% csrf_token %}
+                    <button class="btn btn-secondary" type="submit" style="padding: 10px 20px;">
+                        Cerrar sesión
+                    </button>
+                </form>
+            </div>
+            {% else %}
+            <div class="nav-buttons">
+                <a href="{% url 'login' %}" class="btn btn-secondary">Iniciar sesión</a>
+                <a href="{% url 'registro' %}" class="btn btn-primary">Crear cuenta</a>
+            </div>
+            {% endif %}
+        </div>
+    </nav>
+
+    <section class="scanner">
+        <div class="container">
+
+            <div class="scanner-header">
+                <h1>Escáner Inteligente</h1>
+                <p>
+                    Sube una fotografía del alimento para identificar automáticamente el plato y detectar posibles alérgenos mediante inteligencia artificial.
+                </p>
+            </div>
+
+            <div class="scanner-grid">
+
+                <!-- Columna de Subida de Imagen -->
+                <div class="upload-card">
+                    <h2>Subir imagen</h2>
+
+                    <form method="POST" enctype="multipart/form-data" id="upload-form">
                         {% csrf_token %}
-                        <div class="mb-4">
-                            <input class="form-control" type="file" name="foto" accept="image/*" required>
+
+                        <div class="upload-box" onclick="document.getElementById('foto-input').click();" style="cursor: pointer;">
+                            <div class="upload-icon">📷</div>
+                            <p id="upload-text">Selecciona o arrastra una fotografía del alimento.</p>
+                            <input type="file" id="foto-input" name="foto" accept="image/*" required style="display: none;" onchange="updateFileName(this)">
                         </div>
-                        <button type="submit" class="btn btn-primary w-100 py-2">
-                            EJECUTAR ANÁLISIS
+
+                        <button class="btn btn-primary" type="submit" style="width: 100%;">
+                            ⚡ Analizar imagen
                         </button>
                     </form>
-                    
+
                     {% if url_imagen %}
-                    <div class="mt-4">
-                        <p class="text-muted small fw-bold mb-2">IMAGEN CAPTURADA:</p>
-                        <img src="{{ url_imagen }}" alt="Plato subido" class="foto-preview">
+                    <div class="preview">
+                        <h3>Imagen seleccionada</h3>
+                        <img src="{{ url_imagen }}" alt="Imagen subida">
                     </div>
                     {% endif %}
                 </div>
+
+                <!-- Columna de Resultados del Análisis -->
+                <div class="result-card">
+                    {% if error %}
+                    <div class="error-box">
+                        <h3>Error en el análisis</h3>
+                        <p>{{ error }}</p>
+                    </div>
+
+                    {% elif plato %}
+                    <div class="result-header">
+                        <div>
+                            <p class="label">Plato detectado</p>
+                            <h2>{{ plato }}</h2>
+                        </div>
+
+                        <div class="confidence">
+                            <span>Confianza</span>
+                            <strong>{{ confianza }}%</strong>
+                        </div>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat">
+                            <h4>Nivel de Riesgo</h4>
+                            {% if riesgo == 'MUY ALTO' or riesgo == 'ALTO' %}
+                            <span class="risk high">⚠️ {{ riesgo }}</span>
+                            {% elif riesgo == 'MEDIO' %}
+                            <span class="risk medium">⚠️ {{ riesgo }}</span>
+                            {% else %}
+                            <span class="risk low">✅ {{ riesgo }}</span>
+                            {% endif %}
+                        </div>
+
+                        <div class="stat">
+                            <h4>Alérgenos detectados</h4>
+                            <div class="chips">
+                                {% for alergeno in alergenos %}
+                                <span class="chip">
+                                    {{ alergeno }}
+                                </span>
+                                {% empty %}
+                                <span class="chip success">
+                                    ✓ Sin alérgenos detectados
+                                </span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="info-card">
+                        <h3>Información clínica y recomendaciones</h3>
+                        <p>{{ info }}</p>
+                    </div>
+
+                    {% else %}
+                    <div class="empty-state">
+                        <div class="empty-icon">🍽️</div>
+                        <h2>Esperando análisis</h2>
+                        <p>
+                            Selecciona una imagen del alimento para comenzar el análisis visual mediante inteligencia artificial (ResNet18 + Groq).
+                        </p>
+                    </div>
+                    {% endif %}
+                </div>
+
             </div>
 
-            <div class="col-md-7">
-                {% if error %}
-                    <div class="card p-3 mb-3 bg-danger text-white" style="border-color: #8B0000;">
-                        <strong>ERROR DEL SISTEMA:</strong> {{ error }}
-                    </div>
-                {% endif %}
+        </div>
+    </section>
 
-                {% if plato %}
-                    <div class="card p-4 h-100">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <div>
-                                <p class="text-muted small fw-bold mb-0">OBJETO IDENTIFICADO</p>
-                                <h2 class="text-rojo mb-0">{{ plato }}</h2>
-                            </div>
-                            <div class="text-end">
-                                <p class="text-muted small fw-bold mb-0">FIABILIDAD</p>
-                                <h3 class="mb-0">{{ confianza }}%</h3>
-                            </div>
-                        </div>
-                        
-                        <hr>
-                        
-                        <div class="row mt-4">
-                            <div class="col-12 mb-4">
-                                <p class="text-muted small fw-bold mb-2">NIVEL DE RIESGO</p>
-                                {% if riesgo == 'ALTO' or riesgo == 'MUY ALTO' %}
-                                    <div class="riesgo-box" style="background-color: #ffcccc;">RIESGO {{ riesgo }}</div>
-                                {% elif riesgo == 'MEDIO' %}
-                                    <div class="riesgo-box" style="background-color: #fff3cd;">RIESGO {{ riesgo }}</div>
-                                {% else %}
-                                    <div class="riesgo-box" style="background-color: #d1e7dd;">RIESGO {{ riesgo }}</div>
-                                {% endif %}
-                            </div>
-
-                            <div class="col-12 mb-4">
-                                <p class="text-muted small fw-bold mb-2">MARCADORES DETECTADOS (ALÉRGENOS)</p>
-                                <div class="d-flex flex-wrap">
-                                    {% for alergeno in alergenos %}
-                                        <span class="badge-alergeno">{{ alergeno }}</span>
-                                    {% empty %}
-                                        <span class="badge-alergeno" style="background-color: #d1e7dd;">Ninguno detectado</span>
-                                    {% endfor %}
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="mt-auto p-3" style="background-color: var(--fondo-crema); border-radius: 4px; border: 1px solid #ddd;">
-                            <p class="text-muted small fw-bold mb-1">OBSERVACIONES CLÍNICAS</p>
-                            <p class="mb-0" style="font-size: 0.95rem;">{{ info }}</p>
-                        </div>
-                    </div>
-                {% else %}
-                    <div class="card p-5 h-100 d-flex align-items-center justify-content-center text-center">
-                        <div class="opacity-50">
-                            <h2 class="titulo-oswald mb-3">SISTEMA EN ESPERA</h2>
-                            <p>Esperando carga de imagen para cruce de datos.</p>
-                        </div>
-                    </div>
-                {% endif %}
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <h2 class="footer-logo">FOODTO.</h2>
+                    <br>
+                    <p>Sistema Inteligente de Análisis Visual de Alérgenos mediante Inteligencia Artificial.</p>
+                    <br>
+                    <p>Trabajo Fin de Grado</p>
+                    <p>Ingeniería Informática del Software</p>
+                    <p>Universidad de Sevilla</p>
+                </div>
+                <div>
+                    <h3>Navegación</h3>
+                    <br>
+                    <p><a href="{% url 'landing' %}">Inicio</a></p>
+                    <p><a href="{% url 'escaner' %}">Escáner IA</a></p>
+                    <p><a href="{% url 'perfil' %}">Mi Perfil</a></p>
+                </div>
+                <div>
+                    <h3>Acceso</h3>
+                    <br>
+                    {% if user.is_authenticated %}
+                    <p><a href="{% url 'perfil' %}">Mi Perfil ({{ user.username }})</a></p>
+                    <p><a href="{% url 'escaner' %}">Ir al Escáner</a></p>
+                    {% else %}
+                    <p><a href="{% url 'login' %}">Iniciar sesión</a></p>
+                    <p><a href="{% url 'registro' %}">Crear cuenta</a></p>
+                    {% endif %}
+                </div>
+            </div>
+            <hr style="margin:60px 0;border:1px solid rgba(255,255,255,.15);">
+            <div style="text-align:center;">
+                <p style="color:#aaa;">© 2026 Foodto · Trabajo Fin de Grado · Universidad de Sevilla</p>
             </div>
         </div>
-    </div>
+    </footer>
+
+    <script>
+        function updateFileName(input) {
+            const textEl = document.getElementById('upload-text');
+            if (input.files && input.files[0]) {
+                textEl.innerHTML = `<strong>Imagen seleccionada:</strong><br>${input.files[0].name}`;
+            }
+        }
+    </script>
 </body>
+
 </html>
