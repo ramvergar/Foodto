@@ -45,48 +45,55 @@ class FoodtoConfig(AppConfig):
     ]
 
     def ready(self):
-        """Esta función se ejecuta UNA SOLA VEZ cuando arranca el servidor Django."""
+        """Esta función se ejecuta cuando arranca el proceso del servidor.
 
-        if os.environ.get("RUN_MAIN") == "true":
-            print("[Foodto] Despertando a la IA de reconocimiento visual...")
+        Nota: antes solo cargaba el modelo si RUN_MAIN == "true", una variable
+        que unicamente pone el autoreloader de `manage.py runserver`. Gunicorn
+        (usado en produccion) nunca la define, asi que el modelo no se cargaba
+        nunca en el despliegue. Se quita la condicion para que cargue siempre;
+        con `runserver` esto hace que se cargue dos veces (proceso vigilante +
+        proceso hijo), pero es un coste minimo solo en desarrollo local.
+        """
 
-            # 0. Si existe el JSON de clases generado por entrenar_modelo.py, usamos ese
-            # orden (el que realmente vio el modelo) en vez de la lista escrita a mano,
-            # para que nunca mas se desincronicen indice <-> nombre de plato.
-            ruta_clases = os.path.join(os.path.dirname(__file__), "modelo_ultimate_clases.json")
-            if os.path.exists(ruta_clases):
-                with open(ruta_clases, "r", encoding="utf-8") as f:
-                    self.clases_ia = json.load(f)
+        print("[Foodto] Despertando a la IA de reconocimiento visual...")
 
-            # 1. Instanciamos la base de ResNet18 vacía
-            modelo = models.resnet18(weights=None)
-            num_features = modelo.fc.in_features
+        # 0. Si existe el JSON de clases generado por entrenar_modelo.py, usamos ese
+        # orden (el que realmente vio el modelo) en vez de la lista escrita a mano,
+        # para que nunca mas se desincronicen indice <-> nombre de plato.
+        ruta_clases = os.path.join(os.path.dirname(__file__), "modelo_ultimate_clases.json")
+        if os.path.exists(ruta_clases):
+            with open(ruta_clases, "r", encoding="utf-8") as f:
+                self.clases_ia = json.load(f)
 
-            # 2. CALCAMOS EXACTAMENTE la misma estructura que usamos para entrenar el modelo del 82%
-            modelo.fc = nn.Sequential(
-                nn.Linear(num_features, 256),
-                nn.ReLU(),
-                nn.Dropout(0.4),  # En modo .eval() esto se desactiva solo, no te preocupes
-                nn.Linear(256, len(self.clases_ia)),
+        # 1. Instanciamos la base de ResNet18 vacía
+        modelo = models.resnet18(weights=None)
+        num_features = modelo.fc.in_features
+
+        # 2. CALCAMOS EXACTAMENTE la misma estructura que usamos para entrenar el modelo del 82%
+        modelo.fc = nn.Sequential(
+            nn.Linear(num_features, 256),
+            nn.ReLU(),
+            nn.Dropout(0.4),  # En modo .eval() esto se desactiva solo, no te preocupes
+            nn.Linear(256, len(self.clases_ia)),
+        )
+
+        # 3. Buscamos el archivo de pesos
+        ruta_modelo = os.path.join(
+            os.path.dirname(__file__), "modelo_ultimate.pth"
+        )
+
+        if os.path.exists(ruta_modelo):
+            # Cargamos los pesos forzando el dispositivo CPU (ideal para servidores web locales)
+            modelo.load_state_dict(
+                torch.load(ruta_modelo, map_location=torch.device("cpu"), weights_only=True)
             )
+            modelo.eval()  # Congela las capas de Dropout y BatchNormalization para inferencia
 
-            # 3. Buscamos el archivo de pesos
-            ruta_modelo = os.path.join(
-                os.path.dirname(__file__), "modelo_ultimate.pth"
+            self.modelo_ia = modelo
+            print(
+                f"[Foodto] IA del 82% cargada con éxito. Detectando {len(self.clases_ia)} clases."
             )
-
-            if os.path.exists(ruta_modelo):
-                # Cargamos los pesos forzando el dispositivo CPU (ideal para servidores web locales)
-                modelo.load_state_dict(
-                    torch.load(ruta_modelo, map_location=torch.device("cpu"), weights_only=True)
-                )
-                modelo.eval()  # Congela las capas de Dropout y BatchNormalization para inferencia
-
-                self.modelo_ia = modelo
-                print(
-                    f"[Foodto] IA del 82% cargada con éxito. Detectando {len(self.clases_ia)} clases."
-                )
-            else:
-                print(
-                    f"[Foodto] ERROR: No encuentro el modelo entrenado en {ruta_modelo}"
-                )
+        else:
+            print(
+                f"[Foodto] ERROR: No encuentro el modelo entrenado en {ruta_modelo}"
+            )
